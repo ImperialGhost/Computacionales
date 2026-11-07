@@ -27,7 +27,7 @@ st.markdown(
 
 html, body, [class*="css"], .stApp { font-family: 'Inter', sans-serif; }
 #MainMenu, footer { visibility: hidden; }
-.block-container { max-width: 880px; padding-top: 2rem; padding-bottom: 3rem; }
+.block-container { max-width: 880px; padding-top: 5rem !important; padding-bottom: 3rem; }
 
 /* Cabecera */
 .hero {
