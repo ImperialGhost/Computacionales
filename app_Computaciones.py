@@ -39,14 +39,37 @@ html, body, [class*="css"], .stApp { font-family: 'Inter', sans-serif; }
 .hero p  { color: rgba(255,255,255,.88); margin: .45rem 0 0 0; font-size: 1.02rem; }
 
 /* Pestañas */
-.stTabs [data-baseweb="tab-list"] { gap: .4rem; border-bottom: none; background: rgba(99,102,241,.08); padding: .35rem; border-radius: 14px; }
-.stTabs [data-baseweb="tab"] { height: 2.6rem; border-radius: 10px; padding: 0 1.2rem; font-weight: 600; background: transparent; }
-.stTabs [aria-selected="true"] { background: #fff; color: #4F46E5 !important; box-shadow: 0 2px 8px rgba(15,23,42,.10); }
-.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] { display: none; }
+.stTabs [data-baseweb="tab-list"] {
+    gap: .35rem; padding: .3rem; border-radius: 16px; border: none !important;
+    background: rgba(127,127,127,.13);
+}
+.stTabs button[role="tab"] {
+    flex: 1; justify-content: center; height: 2.7rem; border-radius: 12px; padding: 0 1.1rem;
+    background: transparent; border: none; transition: all .18s ease; opacity: .75;
+}
+.stTabs button[role="tab"] p { font-weight: 600; font-size: .98rem; margin: 0; }
+.stTabs button[role="tab"]:hover { opacity: 1; background: rgba(127,127,127,.15); }
+.stTabs button[role="tab"][aria-selected="true"] {
+    opacity: 1; background: linear-gradient(135deg, #6366F1, #7C3AED);
+    box-shadow: 0 6px 16px -6px rgba(99,102,241,.8);
+}
+.stTabs button[role="tab"][aria-selected="true"],
+.stTabs button[role="tab"][aria-selected="true"] * { color: #fff !important; }
+.stTabs [data-baseweb="tab-highlight"], .stTabs [data-baseweb="tab-border"] {
+    display: none !important; height: 0 !important; background: transparent !important;
+}
+
+/* Desplegables */
+[data-testid="stExpander"] { border: none !important; }
+[data-testid="stExpander"] details {
+    border: 1px solid rgba(99,102,241,.30) !important; border-radius: 14px !important;
+    background: rgba(99,102,241,.06);
+}
+[data-testid="stExpander"] summary { font-weight: 600; padding: .7rem 1rem; }
 
 /* Títulos de sección */
 .sec-title { font-size: 1.35rem; font-weight: 700; margin: 1.2rem 0 .15rem 0; letter-spacing: -.01em; }
-.sec-desc  { color: #64748B; margin-bottom: 1.1rem; font-size: .95rem; }
+.sec-desc  { opacity: .7; margin-bottom: 1.1rem; font-size: .95rem; }
 
 /* Inputs */
 .stTextInput input, .stSelectbox [data-baseweb="select"] > div {
@@ -76,19 +99,19 @@ button[data-testid="stBaseButton-primary"]:hover, button[data-testid="stBaseButt
 }
 .result .lbl { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: #6366F1; font-weight: 700; }
 .result .val { font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 700; word-break: break-all; margin-top: .2rem; }
-.result .sub { color: #64748B; font-size: .9rem; margin-top: .25rem; font-family: 'JetBrains Mono', monospace; }
+.result .sub { opacity: .65; font-size: .9rem; margin-top: .25rem; font-family: 'JetBrains Mono', monospace; }
 
 .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .7rem; margin: .6rem 0 1rem 0; }
-.chip { background: #fff; border: 1px solid #E2E8F0; border-radius: 14px; padding: .75rem 1rem; }
-.chip span { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #94A3B8; font-weight: 600; }
-.chip b { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: #0F172A; word-break: break-all; }
+.chip { background: rgba(127,127,127,.10); border: 1px solid rgba(127,127,127,.25); border-radius: 14px; padding: .75rem 1rem; }
+.chip span { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; opacity: .6; font-weight: 600; }
+.chip b { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: inherit; word-break: break-all; }
 
-.hint { color: #64748B; font-size: .85rem; margin: -.4rem 0 .8rem 0; font-family: 'JetBrains Mono', monospace; }
+.hint { opacity: .7; font-size: .85rem; margin: -.4rem 0 .8rem 0; font-family: 'JetBrains Mono', monospace; }
 .hint.ok::before { content: "✓ "; color: #10B981; font-weight: 700; }
-.hint.bad { color: #E11D48; font-family: 'Inter', sans-serif; }
+.hint.bad { opacity: 1; color: #F43F5E; font-family: 'Inter', sans-serif; }
 
-.hist-item { font-family: 'JetBrains Mono', monospace; font-size: .9rem; padding: .35rem 0; border-bottom: 1px dashed #E2E8F0; }
-.footer { text-align: center; color: #94A3B8; font-size: .8rem; margin-top: 2.5rem; }
+.hist-item { font-family: 'JetBrains Mono', monospace; font-size: .9rem; padding: .35rem 0; border-bottom: 1px dashed rgba(127,127,127,.3); }
+.footer { text-align: center; opacity: .5; font-size: .8rem; margin-top: 2.5rem; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -258,8 +281,9 @@ def pagina_conversor():
             valor = a_decimal(texto, SISTEMAS[nombre_o], nombre_o)
             resultado = desde_decimal(valor, SISTEMAS[nombre_d])
             tarjeta(f"{nombre_o} → {nombre_d}", resultado, f"{texto.strip()} ({nombre_o})")
-            st.caption("Equivalente en todos los sistemas")
-            chips([(n, desde_decimal(valor, b)) for n, b in SISTEMAS.items()])
+            otros = [(n, desde_decimal(valor, b)) for n, b in SISTEMAS.items() if n not in (nombre_o, nombre_d)]
+            with st.expander("Ver equivalentes en otros sistemas"):
+                chips(otros)
         except ErrorDeValor as e:
             st.error(str(e), icon="⚠️")
 
