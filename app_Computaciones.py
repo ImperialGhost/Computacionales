@@ -260,7 +260,7 @@ def pagina_conversor():
     seccion(
         "Conversor de sistemas numéricos",
         "Convierte entre decimal, binario, octal y hexadecimal. "
-        "Acepta negativos, fracciones y prefijos <code>0b</code>, <code>0o</code>, <code>0x</code>.",
+        "Puedes usar negativos (<code>-5</code>) y decimales con punto (<code>2.5</code>).",
     )
 
     c1, c2, c3 = st.columns([5, 1.2, 5])
